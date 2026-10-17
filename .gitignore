@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+.idea/workspace.xml
+.pytest_cache/
+runs/
+logs/
+data/fexl_cache/

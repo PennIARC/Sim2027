@@ -1,0 +1,15 @@
+{
+  "batch": "example",
+  "group": "toy-pick-best",
+  "tags": ["toy", "smoke"],
+  "env": "rl.toy_envs:PickBestEnv",
+  "policy": "rl.policy:mlp_policy",
+  "epochs": 40,
+  "num_envs": 4,
+  "primary_stat": "score",
+  "specs": [
+    {"name": "pick_base", "blurb": "baseline MLP\nDefault PPO settings on the toy pick-the-best task; the reference for the lr sweep.", "seed": 0},
+    {"name": "pick_lr_high", "blurb": "higher policy lr\nSame as pick_base with pi_lr 1e-3, to see whether learning is faster.", "parent": "pick_base", "pi_lr": 1e-3},
+    {"name": "pick_entropy", "blurb": "entropy bonus\nSame as pick_base with entropy_coef 0.01, to test exploration.", "parent": "pick_base", "entropy_coef": 0.01, "tags": ["toy", "entropy"]}
+  ]
+}

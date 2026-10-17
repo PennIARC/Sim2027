@@ -1,0 +1,1063 @@
+{
+"note": "parsed from fexl.com/iarc/draw responses; mines = (col,row); lightgreen = buffer+centerline squares",
+"scenarios": {
+"30_1": [
+[
+0,
+59
+],
+[
+2,
+31
+],
+[
+5,
+122
+],
+[
+6,
+59
+],
+[
+8,
+71
+],
+[
+8,
+82
+],
+[
+10,
+16
+],
+[
+11,
+60
+],
+[
+14,
+5
+],
+[
+14,
+52
+],
+[
+14,
+105
+],
+[
+15,
+11
+],
+[
+17,
+111
+],
+[
+19,
+124
+],
+[
+21,
+109
+],
+[
+22,
+46
+],
+[
+23,
+8
+],
+[
+23,
+123
+],
+[
+24,
+96
+],
+[
+25,
+42
+],
+[
+25,
+97
+],
+[
+25,
+126
+],
+[
+26,
+121
+],
+[
+27,
+122
+],
+[
+29,
+54
+],
+[
+32,
+50
+],
+[
+35,
+20
+],
+[
+35,
+34
+],
+[
+35,
+106
+],
+[
+36,
+17
+]
+],
+"100_5": [
+[
+0,
+46
+],
+[
+1,
+29
+],
+[
+1,
+43
+],
+[
+1,
+45
+],
+[
+1,
+104
+],
+[
+1,
+112
+],
+[
+2,
+54
+],
+[
+3,
+20
+],
+[
+3,
+43
+],
+[
+3,
+116
+],
+[
+4,
+96
+],
+[
+4,
+101
+],
+[
+5,
+18
+],
+[
+5,
+60
+],
+[
+5,
+65
+],
+[
+6,
+93
+],
+[
+7,
+10
+],
+[
+7,
+35
+],
+[
+8,
+46
+],
+[
+8,
+102
+],
+[
+8,
+110
+],
+[
+9,
+44
+],
+[
+10,
+31
+],
+[
+10,
+103
+],
+[
+11,
+42
+],
+[
+11,
+67
+],
+[
+11,
+97
+],
+[
+11,
+102
+],
+[
+11,
+114
+],
+[
+12,
+16
+],
+[
+12,
+53
+],
+[
+12,
+55
+],
+[
+12,
+99
+],
+[
+13,
+104
+],
+[
+14,
+37
+],
+[
+15,
+25
+],
+[
+15,
+33
+],
+[
+16,
+51
+],
+[
+17,
+23
+],
+[
+17,
+66
+],
+[
+17,
+121
+],
+[
+18,
+19
+],
+[
+18,
+53
+],
+[
+18,
+86
+],
+[
+18,
+112
+],
+[
+19,
+12
+],
+[
+19,
+21
+],
+[
+19,
+99
+],
+[
+20,
+26
+],
+[
+20,
+42
+],
+[
+20,
+85
+],
+[
+20,
+89
+],
+[
+20,
+114
+],
+[
+21,
+9
+],
+[
+21,
+82
+],
+[
+21,
+112
+],
+[
+22,
+17
+],
+[
+22,
+61
+],
+[
+23,
+107
+],
+[
+24,
+3
+],
+[
+24,
+81
+],
+[
+25,
+31
+],
+[
+25,
+100
+],
+[
+26,
+20
+],
+[
+26,
+23
+],
+[
+26,
+26
+],
+[
+26,
+69
+],
+[
+27,
+6
+],
+[
+27,
+34
+],
+[
+27,
+103
+],
+[
+28,
+4
+],
+[
+28,
+8
+],
+[
+28,
+51
+],
+[
+28,
+103
+],
+[
+28,
+124
+],
+[
+29,
+15
+],
+[
+29,
+21
+],
+[
+29,
+32
+],
+[
+29,
+78
+],
+[
+30,
+57
+],
+[
+30,
+102
+],
+[
+30,
+111
+],
+[
+31,
+52
+],
+[
+31,
+123
+],
+[
+32,
+69
+],
+[
+32,
+103
+],
+[
+32,
+109
+],
+[
+33,
+106
+],
+[
+34,
+27
+],
+[
+34,
+42
+],
+[
+35,
+104
+],
+[
+36,
+34
+],
+[
+36,
+85
+],
+[
+36,
+95
+],
+[
+36,
+99
+],
+[
+37,
+104
+],
+[
+38,
+51
+],
+[
+38,
+97
+],
+[
+38,
+102
+],
+[
+39,
+23
+]
+]
+},
+"cases": [
+{
+"path_text": "S,10,2\nU,149\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 4.0,
+"fexl_L": 298.0,
+"fexl_W": 10.0,
+"msgs": [
+"You have crossed over 1 mine.",
+"(Marked in orange on the main path.)",
+"The course is not yet completed."
+],
+"n_blue": 149,
+"n_lightgreen": 748,
+"lightgreen_sha1": "51228f2008ec",
+"n_crossed": 1
+},
+{
+"path_text": "S,10,2\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 4.0,
+"fexl_L": 300.0,
+"fexl_W": 10.0,
+"msgs": [
+"You have crossed over 1 mine.",
+"(Marked in orange on the main path.)"
+],
+"n_blue": 150,
+"n_lightgreen": 750,
+"lightgreen_sha1": "da5f33ef7e3c",
+"n_crossed": 1
+},
+{
+"path_text": "S,10,0\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 1.0,
+"fexl_L": 300.0,
+"fexl_W": 2.0,
+"msgs": [
+"You have crossed over 1 mine.",
+"(Marked in orange on the main path.)"
+],
+"n_blue": 150,
+"n_lightgreen": 150,
+"lightgreen_sha1": "de419a26b621",
+"n_crossed": 1
+},
+{
+"path_text": "S,10,0\nU,5\nR,3\nU,145\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 19.608,
+"fexl_B": 0.0,
+"fexl_L": 306.0,
+"fexl_W": 2.0,
+"msgs": [],
+"n_blue": 153,
+"n_lightgreen": 153,
+"lightgreen_sha1": "708eba4a13d0",
+"n_crossed": 0
+},
+{
+"path_text": "S,10,0\nU,10\nL,3\nD,2\nR,5\nU,140\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 34.0,
+"fexl_W": 2.0,
+"msgs": [
+"The course is not yet completed."
+],
+"n_blue": 17,
+"n_lightgreen": 17,
+"lightgreen_sha1": "295d0d7143eb",
+"n_crossed": 0
+},
+{
+"path_text": "S,10,0\nU,10\nL,3\nD,10\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 44.0,
+"fexl_W": 2.0,
+"msgs": [
+"The course is not yet completed.",
+"You have stepped out of bounds."
+],
+"n_blue": 22,
+"n_lightgreen": 22,
+"lightgreen_sha1": "62b721174100",
+"n_crossed": 0
+},
+{
+"path_text": "S,40,0\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 0.0,
+"fexl_W": 2.0,
+"msgs": [
+"You have stepped out of bounds."
+],
+"n_blue": 0,
+"n_lightgreen": 0,
+"lightgreen_sha1": "97d170e1550e",
+"n_crossed": 0
+},
+{
+"path_text": "S,10,0\nU,151\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 1.0,
+"fexl_L": 300.0,
+"fexl_W": 2.0,
+"msgs": [
+"You have crossed over 1 mine.",
+"(Marked in orange on the main path.)",
+"You have stepped out of bounds."
+],
+"n_blue": 150,
+"n_lightgreen": 150,
+"lightgreen_sha1": "de419a26b621",
+"n_crossed": 1
+},
+{
+"path_text": "S,20,25\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 26.452,
+"fexl_B": 30.0,
+"fexl_L": 300.0,
+"fexl_W": 82.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 6000,
+"lightgreen_sha1": "e7f377fb5408",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,0\nU,149\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 298.0,
+"fexl_W": 2.0,
+"msgs": [
+"The course is not yet completed."
+],
+"n_blue": 149,
+"n_lightgreen": 149,
+"lightgreen_sha1": "54ecbd4835ad",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,4\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 36.0,
+"fexl_B": 4.0,
+"fexl_L": 300.0,
+"fexl_W": 18.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 1200,
+"lightgreen_sha1": "a8d0a0bc1dd3",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,4\nU,30\nR,2\nU,30\nL,1\nU,90\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 25.21,
+"fexl_B": 6.0,
+"fexl_L": 306.0,
+"fexl_W": 18.0,
+"msgs": [],
+"n_blue": 153,
+"n_lightgreen": 1325,
+"lightgreen_sha1": "677861496b49",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,7\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 37.5,
+"fexl_B": 7.0,
+"fexl_L": 300.0,
+"fexl_W": 30.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 1650,
+"lightgreen_sha1": "708d9223de05",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,0\nR,1\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 300.0,
+"fexl_W": 2.0,
+"msgs": [
+"You have stepped out of bounds."
+],
+"n_blue": 150,
+"n_lightgreen": 150,
+"lightgreen_sha1": "5443726ebd10",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,0\nU,151\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 300.0,
+"fexl_W": 2.0,
+"msgs": [
+"You have stepped out of bounds."
+],
+"n_blue": 150,
+"n_lightgreen": 150,
+"lightgreen_sha1": "7644edfdade5",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,0\nU,150\nL,1\nD,1\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 304.0,
+"fexl_W": 2.0,
+"msgs": [
+"The course is not yet completed."
+],
+"n_blue": 152,
+"n_lightgreen": 152,
+"lightgreen_sha1": "0514826000fd",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,0\nU,149\nL,1\nU,1\nR,1\nD,1\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 304.0,
+"fexl_W": 2.0,
+"msgs": [
+"The course is not yet completed."
+],
+"n_blue": 152,
+"n_lightgreen": 152,
+"lightgreen_sha1": "0514826000fd",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,0\nU,150\nL,2\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 19.737,
+"fexl_B": 0.0,
+"fexl_L": 304.0,
+"fexl_W": 2.0,
+"msgs": [],
+"n_blue": 152,
+"n_lightgreen": 152,
+"lightgreen_sha1": "131132ec11a1",
+"n_crossed": 0
+},
+{
+"path_text": "S,39,2\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 100.0,
+"fexl_B": 0.0,
+"fexl_L": 300.0,
+"fexl_W": 10.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 450,
+"lightgreen_sha1": "87e726cdb725",
+"n_crossed": 0
+},
+{
+"path_text": "S,20,3\nU,50\nR,5\nU,100\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 8.0,
+"fexl_L": 310.0,
+"fexl_W": 14.0,
+"msgs": [
+"You have crossed over 2 mines.",
+"(Marked in orange on the main path.)"
+],
+"n_blue": 155,
+"n_lightgreen": 1073,
+"lightgreen_sha1": "e4723de45a8a",
+"n_crossed": 2
+},
+{
+"path_text": "S,1,0\nL,5\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 0.0,
+"fexl_B": 0.0,
+"fexl_L": 0.0,
+"fexl_W": 2.0,
+"msgs": [
+"You have stepped out of bounds."
+],
+"n_blue": 0,
+"n_lightgreen": 0,
+"lightgreen_sha1": "97d170e1550e",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,19\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 45.882,
+"fexl_B": 16.0,
+"fexl_L": 300.0,
+"fexl_W": 78.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 3450,
+"lightgreen_sha1": "91a679bced07",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,20\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 43.158,
+"fexl_B": 18.0,
+"fexl_L": 300.0,
+"fexl_W": 82.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 3600,
+"lightgreen_sha1": "67db853f9a8e",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,21\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 43.158,
+"fexl_B": 18.0,
+"fexl_L": 300.0,
+"fexl_W": 82.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 3600,
+"lightgreen_sha1": "67db853f9a8e",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,30\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 7,
+"N": 0,
+"scenario": "30_1",
+"fexl_score": 43.158,
+"fexl_B": 18.0,
+"fexl_L": 300.0,
+"fexl_W": 82.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 3600,
+"lightgreen_sha1": "67db853f9a8e",
+"n_crossed": 0
+},
+{
+"path_text": "S,3,4\nU,150\n",
+"num_danger": 30,
+"seed": 1,
+"A": 3,
+"N": 2,
+"scenario": "30_1",
+"fexl_score": 8.108,
+"fexl_B": 4.0,
+"fexl_L": 300.0,
+"fexl_W": 18.0,
+"msgs": [],
+"n_blue": 150,
+"n_lightgreen": 1200,
+"lightgreen_sha1": "a8d0a0bc1dd3",
+"n_crossed": 0
+},
+{
+"path_text": "S,4,3\nU,96\nR,1\nU,54\n",
+"num_danger": 100,
+"seed": 5,
+"A": 7,
+"N": 0,
+"scenario": "100_5",
+"fexl_score": 7.726,
+"fexl_B": 17.0,
+"fexl_L": 302.0,
+"fexl_W": 14.0,
+"msgs": [],
+"n_blue": 151,
+"n_lightgreen": 1051,
+"lightgreen_sha1": "5b6e0b4a9497",
+"n_crossed": 0
+},
+{
+"path_text": "S,4,5\nU,96\nR,1\nU,54\n",
+"num_danger": 100,
+"seed": 5,
+"A": 7,
+"N": 0,
+"scenario": "100_5",
+"fexl_score": 9.106,
+"fexl_B": 23.0,
+"fexl_L": 302.0,
+"fexl_W": 22.0,
+"msgs": [],
+"n_blue": 151,
+"n_lightgreen": 1555,
+"lightgreen_sha1": "92aa92608abf",
+"n_crossed": 0
+},
+{
+"path_text": "S,4,2\nU,150\n",
+"num_danger": 100,
+"seed": 5,
+"A": 7,
+"N": 0,
+"scenario": "100_5",
+"fexl_score": 0.0,
+"fexl_B": 10.0,
+"fexl_L": 300.0,
+"fexl_W": 10.0,
+"msgs": [
+"You have crossed over 2 mines.",
+"(Marked in orange on the main path.)"
+],
+"n_blue": 150,
+"n_lightgreen": 750,
+"lightgreen_sha1": "5014cbf1dd9e",
+"n_crossed": 2
+}
+]
+}
