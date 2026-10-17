@@ -1,0 +1,28 @@
+{
+  "batch": "alloc_b001",
+  "group": "allocator-base",
+  "tags": ["allocator", "cnn", "base"],
+  "env": "sim.allocator_env:AllocatorEnv",
+  "policy": "sim.allocator_policy:cnn_policy",
+  "eval": "sim.evaluate:evaluate",
+  "primary_stat": "score",
+  "epochs": 300,
+  "num_envs": 8,
+  "steps_per_epoch": 64,
+  "num_minibatches": 8,
+  "update_epochs": 4,
+  "gamma": 1.0,
+  "gae_lambda": 0.95,
+  "pi_lr": 0.0003,
+  "vf_lr": 0.001,
+  "entropy_coef": 0.01,
+  "reward_scaling": true,
+  "save_every": 25,
+  "specs": [
+    {
+      "name": "alloc_base",
+      "blurb": "allocator CNN baseline\nDefault PPO cell allocator: CNN over belief maps, K=4 blocks per decision, 7 min episodes, terminal score reward, GPS drift curriculum 0.5 to 1.5 ft.",
+      "seed": 0
+    }
+  ]
+}

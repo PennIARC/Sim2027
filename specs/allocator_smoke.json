@@ -1,0 +1,16 @@
+{
+  "name": "alloc_smoke",
+  "blurb": "allocator smoke test\nTiny end-to-end PPO run (2 envs, 3 epochs, 60 s episodes) to check the allocator env, CNN policy and trainer wiring.",
+  "group": "allocator-smoke",
+  "tags": ["allocator", "smoke"],
+  "env": "sim.allocator_env:AllocatorEnv",
+  "policy": "sim.allocator_policy:cnn_policy",
+  "episode_s": 60,
+  "epochs": 3,
+  "num_envs": 2,
+  "steps_per_epoch": 8,
+  "num_minibatches": 2,
+  "update_epochs": 2,
+  "reward_scaling": true,
+  "save_every": 3
+}
