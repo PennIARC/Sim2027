@@ -18,6 +18,8 @@
   "entropy_coef": 0.01,
   "reward_scaling": true,
   "save_every": 25,
+  "device": "mps",
+  "trainer_threads": 4,
   "specs": [
     {
       "name": "alloc_base",
