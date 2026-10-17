@@ -80,3 +80,22 @@ class BoomEnv(PickBestEnv):
 def test_worker_error_surfaces(tmp_path):
     with pytest.raises(RuntimeError, match="boom"):
         train({**PICK, "env": "tests.test_train_smoke:BoomEnv", "num_envs": 1, "epochs": 1}, tmp_path)
+
+
+def test_resolve_device():
+    import torch
+    from rl.trainer import resolve_device
+    assert resolve_device("cpu").type == "cpu"
+    assert resolve_device("auto").type in ("cpu", "mps", "cuda")
+    if not torch.backends.mps.is_available():
+        with pytest.raises(RuntimeError):
+            resolve_device("mps")
+
+
+def test_train_on_mps_loads_on_cpu(tmp_path):
+    import torch
+    if not torch.backends.mps.is_available():
+        pytest.skip("MPS not available")
+    run(tmp_path, {**PICK, "epochs": 3, "num_envs": 2, "steps_per_epoch": 200, "device": "mps"})
+    policy, norm = load_policy(tmp_path)  # checkpoint saved from the GPU must load on CPU
+    assert next(policy.parameters()).device.type == "cpu"

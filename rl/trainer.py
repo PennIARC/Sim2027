@@ -36,6 +36,17 @@ def _weights(policy) -> dict:
     return {k: v.detach().cpu().numpy() for k, v in policy.state_dict().items()}
 
 
+def resolve_device(name: str) -> torch.device:
+    """spec["device"] -> torch.device; "auto" picks cuda, then mps, then cpu."""
+    if name == "auto":
+        name = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    if name == "mps" and not torch.backends.mps.is_available():
+        raise RuntimeError("device 'mps' requested but MPS is not available")
+    if name == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("device 'cuda' requested but CUDA is not available")
+    return torch.device(name)
+
+
 def _write_csv(path: Path, rows: list) -> None:
     fields = list(dict.fromkeys(k for r in rows for k in r))
     with open(path, "w", newline="") as f:
@@ -45,7 +56,7 @@ def _write_csv(path: Path, rows: list) -> None:
 
 
 def _save(run_dir: Path, policy, norm, rows: list) -> None:
-    torch.save(policy.state_dict(), run_dir / "policy.pt")
+    torch.save({k: v.detach().cpu() for k, v in policy.state_dict().items()}, run_dir / "policy.pt")
     norm.save(run_dir / "norm.npz")
     _write_csv(run_dir / "epochs.csv", rows)
 
@@ -63,7 +74,8 @@ def train(spec: dict, run_dir) -> dict:
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "spec.json").write_text(json.dumps(spec, indent=1))
     random.seed(spec["seed"]), np.random.seed(spec["seed"]), torch.manual_seed(spec["seed"])
-    torch.set_num_threads(int(spec["torch_threads"]))
+    torch.set_num_threads(int(spec["trainer_threads"]))
+    device = resolve_device(spec["device"])
 
     policy, norm = _build(spec)
     if spec["init_from"]:  # warm start: policy (actor and critic) and observation statistics
@@ -71,6 +83,7 @@ def train(spec: dict, run_dir) -> dict:
         policy.load_state_dict(torch.load(src / "policy.pt", map_location="cpu", weights_only=True))
         if (src / "norm.npz").exists():
             norm.load(src / "norm.npz")
+    policy.to(device)  # before the optimizer is built so its state lives on the same device
     optimizer, base_lrs = make_optimizer(policy, spec)
     T, epochs, start = spec["steps_per_epoch"], spec["epochs"], time.time()
     rows, steps = [], 0
@@ -91,7 +104,7 @@ def train(spec: dict, run_dir) -> dict:
             rewards = norm.scale_rewards(ro["rewards"], done)
             adv, ret = compute_gae(rewards, ro["values"], ro["terminated"], ro["truncated"], ro["final_values"],
                                    ro["last_values"], spec["gamma"], spec["gae_lambda"])
-            flat = lambda x: torch.as_tensor(np.ascontiguousarray(x.reshape(T * N, *x.shape[2:])))
+            flat = lambda x: torch.as_tensor(np.ascontiguousarray(x.reshape(T * N, *x.shape[2:]))).to(device)
             batch = {"obs": {k: flat(v) for k, v in norm.apply(ro["obs"]).items()},  # same stats the workers acted with
                      "actions": flat(ro["actions"]), "logp": flat(ro["logp"]), "values": flat(ro["values"]),
                      "adv": flat(adv), "ret": flat(ret)}

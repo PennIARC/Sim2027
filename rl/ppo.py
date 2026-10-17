@@ -47,7 +47,7 @@ def ppo_update(policy, optimizer, batch: dict, spec: dict) -> dict:
     policy.train()
     stop = False
     for _ in range(spec["update_epochs"]):
-        for idx in torch.randperm(B).split(mb_size):
+        for idx in torch.randperm(B, device=adv_all.device).split(mb_size):
             # batch obs may be stored in a compact dtype (e.g. float16 maps): only the minibatch is cast to float32
             obs = {k: (v[idx].float() if v.is_floating_point() else v[idx]) for k, v in batch["obs"].items()}
             act, adv = batch["actions"][idx], adv_all[idx]

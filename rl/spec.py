@@ -13,7 +13,10 @@ DEFAULTS = {
     # rollout
     "epochs": 300, "num_envs": 8,  # worker processes; 0 = one env in-process (tests/debugging)
     "steps_per_epoch": 512,  # decisions per env per epoch
-    "torch_threads": 1, "save_every": 50,  # checkpoint (policy.pt, norm.npz, epochs.csv) every N epochs and at the end
+    "torch_threads": 1,    # per worker process
+    "trainer_threads": 4,  # torch threads for the PPO update in the trainer process
+    "device": "cpu",       # PPO update device: "cpu", "mps" (Apple GPU), "cuda", or "auto"; workers always act on CPU
+    "save_every": 50,      # checkpoint (policy.pt, norm.npz, epochs.csv) every N epochs and at the end
     # PPO
     "gamma": 1.0, "gae_lambda": 0.95, "clip": 0.2, "update_epochs": 4, "num_minibatches": 8,
     "pi_lr": 3e-4, "vf_lr": 1e-3, "lr_schedule": "linear", "lr_decay_end": 0.1,
