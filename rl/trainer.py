@@ -55,10 +55,21 @@ def _write_csv(path: Path, rows: list) -> None:
         w.writerows(rows)
 
 
-def _save(run_dir: Path, policy, norm, rows: list) -> None:
+def _save(run_dir: Path, policy, norm, rows: list, optimizer=None) -> None:
     torch.save({k: v.detach().cpu() for k, v in policy.state_dict().items()}, run_dir / "policy.pt")
     norm.save(run_dir / "norm.npz")
     _write_csv(run_dir / "epochs.csv", rows)
+    if optimizer is not None:  # lets an interrupted run resume with its Adam moments
+        torch.save(optimizer.state_dict(), run_dir / "optimizer.pt")
+
+
+def _read_rows(path: Path) -> list:
+    """epochs.csv back into row dicts (numbers as int/float)."""
+    def num(v):
+        f = float(v)
+        return int(f) if f.is_integer() and "." not in v and "e" not in v.lower() else f
+    with open(path, newline="") as f:
+        return [{k: num(v) for k, v in r.items() if v != ""} for r in csv.DictReader(f)]
 
 
 def _episode_means(episodes: list) -> dict:
@@ -66,11 +77,17 @@ def _episode_means(episodes: list) -> dict:
     return {(f"ep_{k}" if k in RESERVED else k): float(np.mean([e[k] for e in episodes if k in e])) for k in keys}
 
 
-def train(spec: dict, run_dir) -> dict:
+def train(spec: dict, run_dir, resume: bool = False) -> dict:
     """Train one run and write its files into run_dir. Returns {"epochs", "steps", "wall_seconds", "final", "best"}:
-    final = per-episode-stat mean over the last 10 epochs, best = per-stat max of the epoch means."""
+    final = per-episode-stat mean over the last 10 epochs, best = per-stat max of the epoch means.
+
+    resume=True continues an interrupted run in the same run_dir from its last checkpoint (policy.pt, norm.npz,
+    epochs.csv, and optimizer.pt when present): epoch numbering, LR schedule and curriculum progress carry on
+    where the checkpoint left off. Epochs after the last checkpoint are redone."""
     spec = make_spec(spec)
     run_dir = Path(run_dir)
+    if resume and not ((run_dir / "policy.pt").exists() and (run_dir / "epochs.csv").exists()):
+        raise FileNotFoundError(f"nothing to resume in {run_dir} (needs policy.pt and epochs.csv)")
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "spec.json").write_text(json.dumps(spec, indent=1))
     random.seed(spec["seed"]), np.random.seed(spec["seed"]), torch.manual_seed(spec["seed"])
@@ -83,17 +100,26 @@ def train(spec: dict, run_dir) -> dict:
         policy.load_state_dict(torch.load(src / "policy.pt", map_location="cpu", weights_only=True))
         if (src / "norm.npz").exists():
             norm.load(src / "norm.npz")
+    rows, steps, first_epoch, t_offset = [], 0, 1, 0.0
+    if resume:
+        policy.load_state_dict(torch.load(run_dir / "policy.pt", map_location="cpu", weights_only=True))
+        norm.load(run_dir / "norm.npz")
+        rows = _read_rows(run_dir / "epochs.csv")
+        if rows:
+            steps, first_epoch, t_offset = int(rows[-1]["steps"]), int(rows[-1]["epoch"]) + 1, float(rows[-1]["time"])
+        print(f"resuming at epoch {first_epoch}/{spec['epochs']} from {run_dir}", flush=True)
     policy.to(device)  # before the optimizer is built so its state lives on the same device
     optimizer, base_lrs = make_optimizer(policy, spec)
-    T, epochs, start = spec["steps_per_epoch"], spec["epochs"], time.time()
-    rows, steps = [], 0
+    if resume and (run_dir / "optimizer.pt").exists():
+        optimizer.load_state_dict(torch.load(run_dir / "optimizer.pt", map_location=device, weights_only=True))
+    T, epochs, start = spec["steps_per_epoch"], spec["epochs"], time.time() - t_offset
     workers = make_workers(spec)
     try:
         N = workers.n
-        if norm.keys and not spec["init_from"]:  # a short throwaway rollout to get first observation statistics
+        if norm.keys and not spec["init_from"] and not resume:  # a short throwaway rollout to get first observation statistics
             for r in workers.collect(_weights(policy), norm.state(), min(128, T), 0.0):
                 norm.update_obs(r["obs"])
-        for epoch in range(1, epochs + 1):
+        for epoch in range(first_epoch, epochs + 1):
             progress = (epoch - 1) / max(epochs - 1, 1)
             set_lrs(optimizer, base_lrs, progress, epoch, spec)
             results = workers.collect(_weights(policy), norm.state(), T, progress)
@@ -119,10 +145,10 @@ def train(spec: dict, run_dir) -> dict:
                 print(f"epoch {epoch}/{epochs} {rows[-1]['time']:.0f}s | eps {len(ro['episodes'])} | {ep} | "
                       f"v {stats['v_loss']:.3g} | kl {stats['approx_kl']:.3g} | ent {stats['entropy']:.3g}", flush=True)
             if epoch % spec["save_every"] == 0 and epoch != epochs:
-                _save(run_dir, policy, norm, rows)
+                _save(run_dir, policy, norm, rows, optimizer)
     finally:
         workers.close()
-    _save(run_dir, policy, norm, rows)
+    _save(run_dir, policy, norm, rows, optimizer)
 
     ep_keys = [k for k in dict.fromkeys(k for r in rows for k in r) if k not in RESERVED]
     tail = lambda k: [r[k] for r in rows[-10:] if k in r and not math.isnan(r[k])]

@@ -99,3 +99,17 @@ def test_train_on_mps_loads_on_cpu(tmp_path):
     run(tmp_path, {**PICK, "epochs": 3, "num_envs": 2, "steps_per_epoch": 200, "device": "mps"})
     policy, norm = load_policy(tmp_path)  # checkpoint saved from the GPU must load on CPU
     assert next(policy.parameters()).device.type == "cpu"
+
+
+def test_resume_continues_epochs(tmp_path):
+    spec = {**PICK, "epochs": 3, "save_every": 1}
+    train(spec, tmp_path)
+    (tmp_path / "done.json").unlink()  # pretend it was interrupted after epoch 3
+    assert (tmp_path / "optimizer.pt").exists()
+    out = train({**spec, "epochs": 5}, tmp_path, resume=True)
+    rows = (tmp_path / "epochs.csv").read_text().splitlines()
+    header = rows[0].split(",")
+    assert [int(r.split(",")[header.index("epoch")]) for r in rows[1:]] == [1, 2, 3, 4, 5]
+    assert out["epochs"] == 5
+    with pytest.raises(FileNotFoundError):
+        train(spec, tmp_path / "empty", resume=True)

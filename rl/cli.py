@@ -8,6 +8,7 @@ from rl import registry
 
 COMMANDS = {
     "train-one": "train a single spec (JSON path or inline JSON) into a new run folder",
+    "resume": "continue an interrupted run in place from its last checkpoint, then eval + finalize",
     "batch": "run a batch file: train (+ eval hook) every spec in it, resumable",
     "eval": "run the eval hook on finished runs: eval <run>... | --all | --missing",
     "index": "rebuild runs/index.json from the runs' meta.json files",
@@ -28,6 +29,9 @@ def build_parser():
     p.add_argument("--run-dir", default=None, help="train into this already-prepared run (used by batch; the caller finalizes)")
     p.add_argument("--name"), p.add_argument("--group"), p.add_argument("--blurb", help="two lines: short name, then description (use \\n)")
     p.add_argument("--tags", help="comma-separated"), p.add_argument("--parent"), p.add_argument("--batch")
+
+    p = sub.add_parser("resume", parents=[common], help=COMMANDS["resume"])
+    p.add_argument("run", help="run id / name / prefix / folder path")
 
     p = sub.add_parser("batch", parents=[common], help=COMMANDS["batch"])
     p.add_argument("specs_file")
@@ -83,6 +87,26 @@ def cmd_train_one(a):
     try:
         runner.train_in_process(run_dir)
         if runner.has_eval_hook(full):
+            runner.run_eval(run_dir)
+    except Exception as e:
+        status, error = "train_failed", repr(e)
+        print(f"failed: {error}", file=sys.stderr)
+    meta = runner.finalize_run(run_dir, status, error)
+    registry.build_index(a.root)
+    print(f"{meta['name']}: {status} {meta['training'].get('summary', {}).get('final')}")
+    return 0 if status == "ok" else 1
+
+
+def cmd_resume(a):
+    from rl import runner
+    run_dir = Path(a.run) if Path(a.run, registry.META).exists() else registry.find_run(a.run, a.root)
+    if (run_dir / "done.json").exists():
+        raise ValueError(f"{run_dir.name} already finished training")
+    registry.update_meta(run_dir, status="running")
+    status, error = "ok", None
+    try:
+        runner.train_in_process(run_dir, resume=True)
+        if runner.has_eval_hook(registry.read_meta(run_dir)["spec"]):
             runner.run_eval(run_dir)
     except Exception as e:
         status, error = "train_failed", repr(e)

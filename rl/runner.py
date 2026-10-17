@@ -80,11 +80,12 @@ def prepare_run(spec, batch=None, root=None, when=None):
     return run_dir, full
 
 
-def train_in_process(run_dir):
-    """Trains the run in this process from run_dir/spec_in.json; also records the model's parameter count in model.json."""
+def train_in_process(run_dir, resume=False):
+    """Trains the run in this process from run_dir/spec_in.json; also records the model's parameter count in model.json.
+    resume=True continues an interrupted run from its last checkpoint (see rl.trainer.train)."""
     from rl.trainer import train
     run_dir = Path(run_dir)
-    summary = train(json.loads((run_dir / "spec_in.json").read_text()), run_dir)
+    summary = train(json.loads((run_dir / "spec_in.json").read_text()), run_dir, resume=resume)
     registry.dump_json(run_dir / "train_summary.json", summary)
     try:
         from rl.trainer import load_policy
