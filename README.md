@@ -62,3 +62,21 @@ Use `nice -n 10` (or `taskpolicy -b -p <pid>` on running processes, which moves 
 ```
 caffeinate -i nice -n 10 python3 -m rl batch specs/example.json --parallel 4
 ```
+
+## Replay viewer
+
+`pip install -r requirements-viewer.txt` (adds pygame). Record one episode with a trained run or a baseline and watch it:
+
+```
+python3 -m viz.replay --run alloc_base --layout n135_s0.05 --save viz_out/a.npz   # run = id, unique name or id prefix
+python3 -m viz.replay --baseline greedy --seed 3 --progress 1.0
+python3 -m viz.replay --load viz_out/a.npz                                        # --no-view records/saves only
+```
+
+A layout id uses the evaluation seed of that layout (as `sim.evaluate` does); `--progress` is the GPS-drift curriculum point
+(default 1.0 = evaluation). Snapshots are taken at the env's status cadence (about every 1.1 s of sim time) plus exact decision
+events; recordings are `.npz` + `.json` metadata (put `viz_out/` in `.gitignore`). `viz.recorder.record_episode(...)` is the
+pure-numpy API (no pygame). Keys: space play/pause, left/right step (shift = 10), home/end, up/down playback speed, click or drag
+the slider, P p_mine, S seen, M true mines, A allocations, D drones/footprints (filled = true position, hollow = believed),
+R remaining paths, F final path (blue) + buffer (green) with on-path mines orange and buffer mines yellow, E detections,
+C copy fexl link, H help, Esc/Q quit.

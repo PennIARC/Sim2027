@@ -8,3 +8,4 @@ runs/
 logs/
 data/fexl_cache/
 data/eval_baselines/
+viz_out/
